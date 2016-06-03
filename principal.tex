@@ -1,0 +1,123 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Template de Artigo Adaptado para Trabalho de Diplomação do ICEI %%%%%%%%%%%%%%%%%%%%%%%%
+%% codificação UTF-8 - Abntex - Latex -  							     %%
+%% Autor:    Fábio Leandro Rodrigues Cordeiro  (fabioleandro@pucminas.br)                            %% 
+%% Co-autor: Prof. João Paulo Domingos Silva  e Harison da Silva                                     %%
+%% Revisores normas NBR (Padrão PUC Minas): Helenice Rego Cunha e Prof. Theldo Cruz                  %%
+%% Versão: 1.0     13 de março 2014                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[a4paper,12pt,Times]{article}
+\usepackage{abakos}  %pacote com padrão da Abakos baseado no padrão da PUC
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Capa da revista
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\setcounter{page}{80} %iniciar contador de pagina de valor especificado
+\newcommand{\monog}{Modelo de artigo do Instituto de Ciências Exatas e de Informática}
+\newcommand{\monogES}{Article template Institute of Mathematical Sciences and Informatics}
+\newcommand{\tipo}{Artigo }  % Especificar a seção tipo do trabalho: Artigo, Resumo, Tese, Dociê etc
+\newcommand{\origem}{Brasil }
+\newcommand{\editorial}{Belo Horizonte, p. 01-08, jun. 2014}  % p. xx-xx – páginas inicial-final do artigo
+\newcommand{\lcc}{\scriptsize{Licença Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported}}
+
+%%%%%%%%%%%%%%%%%INFORMAÇÕES SOBRE AUTOR PRINCIPAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\AutorA}{Lucas Brandão Magalhães Ricoy}
+\newcommand{\funcaoA}{}
+\newcommand{\emailA}{ricoy.lucas@gmail.com}
+\newcommand{\cursA}{Programa de Graduação em Sistemas de Informação da PUC Minas}
+% 
+% Definir macros para o nome da Instituição, da Faculdade, etc.
+\newcommand{\univ}{Pontifícia Universidade Católica de Minas Gerais}
+
+\newcommand{\keyword}[1]{\textsf{#1}}
+
+\begin{document}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Pagina de titulo
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+\includegraphics[scale=0.2]{figuras/brasao.jpg} \\
+PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS \\
+Instituto de Ciências Exatas e de Informática
+
+% \vspace{1.0cm}
+
+\end{center}
+
+ \vspace{0cm} {
+ \singlespacing \Large{\monog \symbolfootnote[1]{Artigo apresentado ao Instituto de Ciências Exatas e Informática da Pontifícia Universidade Católica de Minas Gerais como pré-requisito para obtenção do título de Bacharel em Ciência da Computação.} \\ }
+  \normalsize{\monogES}
+ }
+
+\vspace{1.0cm}
+
+\begin{flushright}
+\singlespacing 
+\normalsize{\AutorA \footnote{\funcaoA \cursA, \origem -- \emailA . }} \\
+% \normalsize{\AutorB \footnote{\funcaoB, E-mail:\emailB \\ \cursB, \origem. }} \\
+% \normalsize{\AutorC \footnote{\funcaoC, E-mail:\emailC \\ \cursC, \origem. }} \\
+% \normalsize{\AutorD \footnote{\funcaoD \\ Pais de origem: \origemD. E-mail: \emailD}} \\
+%deixar com o valor `0` e usar o '*' no inicio da frase
+% \symbolfootnote[0]{Artigo recebido em 10 de julho de 1983 e aprovado em 29 de maio 2012}
+\end{flushright}
+\thispagestyle{empty}
+
+\vspace{1.0cm}
+
+\begin{abstract}
+\noindent
+O presente trabalho abordou o problema de falta de reuso de software em aplicações multiplataforma, focando principalmente em casos onde o mesmo software é reescrito diversas vezes a fim de permitir sua execução em diferentes plataformas. O trabalho teve como objetivo principal a elaboração de uma arquitetura de software que fosse capaz de gerar a partir de um mesmo código fonte compartilhado, um aplicativo híbrido multiplataforma para ser executado como um website, aplicativo móvel ou desktop. O projeto possui caráter experimental e é embasado em estudos de técnicas já estabelecidas com conceitos inerentes ao desenvolvimento de software baseado em componentes a fim de apresentar uma aplicação prática dos mesmos em um cenário atual. Os resultados evidenciam que o desenvolvimento de aplicativos híbridos multiplataformas com tecnologias atuais é factível apesar de as ferramentas utiizadas serem opinativas em relação ao processo em si.
+\\\textbf{\keyword{Palavras-chave: }} Aplicativos Híbridos. Componentes. Desenvolvimento Móvel. DBC. AngularJS. Ionic. Electron.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\selectlanguage{english}
+%\begin{abstract}
+%\noindent
+%The abstract should contain at least one hundred and fifty words in accordance with the standards of ABNT standard.
+%This present article will address the main features of the web programming languages, that are used currently, 
+%comparing its features as to indicate to indicate the better use of determined language. 
+%The linguage will be divided according with four major caracteristics: Interpreted, compiled, server-side and client-side.
+%This present article will address the main features of the web programming languages.
+%The abstract should contain at least one hundred and fifty words in accordance with the standards of ABNT standard.
+%The linguage will be divided according with four major caracteristics: Interpreted, compiled, server-side and client-side.
+%This present article will address the main features of the web programming languages.
+%The abstract should contain at least one hundred and fifty words in accordance with the standards of ABNT standard.
+%\ \\textbf{\keyword{Keywords: }} Template. \LaTeX. Abakos. Periodics.
+% \end{abstract}
+%
+
+\selectlanguage{brazilian}
+ \onehalfspace  % espaçamento 1.5 entre linhas
+ \setlength{\parindent}{1.25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INICIO DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{textos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIM DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \selectlanguage{brazil}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Inicio bibliografia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\singlespace{
+
+\bibliographystyle{abnt-alf}
+\bibliography{bibliografia}
+
+}
+
+\end{document}
+
+
