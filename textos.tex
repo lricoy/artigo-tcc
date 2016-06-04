@@ -14,7 +14,7 @@ Durante muito tempo, a maioria dos aplicativos desenvolvidos era destinado a uma
 
 Com a grande disseminação de tecnologias de computação móvel, como os \textit{smartphones}, este problema se tornou cada vez mais crítico. De acordo com Moore, Van Baalen e Shevchenko (2015), a demanda por aplicações móveis nunca foi tão alta e os desenvolvedores vem sofrendo para criar experiências atrativas nas principais plataformas e atingir os maiores mercados da área. Isso nos mostra, que apesar de efervescente, o mercado não está preparado para atender todas as expectativas dos clientes atuais.
 
-Para encarar este problemas, iniciativas como o Intel XDK, Apache Cordova, Adobe Phonegap e Microsoft Xamarin foram criadas visando permitir o desenvolvimento para múltiplas plataformas de uma forma expansível e customizável, com experiências e funcionalidades específicas em cada uma. 
+Para encarar este problemas, iniciativas como o \textit{Intel XDK}, \textit{Apache Cordova}, \textit{Adobe Phonegap} e \textit{Microsoft Xamarin} foram criadas visando permitir o desenvolvimento para múltiplas plataformas de uma forma expansível e customizável, com experiências e funcionalidades específicas em cada uma. 
 
 Atualmente, uma abordagem comum e que possui grande adoção é o empacotamento de \textit{WebApps} em \textit{containers} nativos. Esta abordagem possui duas grandes vantagens: a possibilidade de utilizar diversas bibliotecas e ferramentas já disseminadas e testadas no desenvolvimento web e a facilidade para desenvolvimento e validação do produto desenvolvido, tendo em consideração que o produto final nada mais é do que um \textit{website} com acesso aos recursos do dispositivo por meio do \textit{container} em que foi empacotado. Aplicativos desenvolvidos desta forma são normalmente denominados "híbridos".
 
@@ -38,7 +38,7 @@ A ideia da reutilização, segundo \cite{pressman2011} não é nova, pois vem se
 	\item \textbf{Reúso de objetos e funções:} Funções ou componentes que implementa uma única função, como uma função matemática ou uma classe de objetos  podem ser reutilziados na forma de bibliotecas. 
 \end{enumerate}
 
-A construção com base em componentes, é, segundo \cite{pressman2011}, o caminho o qual a indústria está trilhando. Apesar da afirmação do autor ainda não possuir comprovação ou dados para validação segundo \cite{cbs28}, o desenvolvimento de componentes reutilizáveis vem recebendo cada vez mais adeptos segundo <PETE BACON WHITE PAPER DO GOOGLE>  e é a abordagem utilizada por esse artigo.
+A construção com base em componentes, é, segundo \cite{pressman2011}, o caminho o qual a indústria está trilhando. Apesar da afirmação do autor ainda não possuir comprovação ou dados para validação segundo \cite{28dbc}, o desenvolvimento de componentes reutilizáveis vem recebendo cada vez mais adeptos segundo <PETE BACON WHITE PAPER DO GOOGLE>  e é a abordagem utilizada por esse artigo.
 
 \subsection{\esp Arquitetura de Software}
 
@@ -49,35 +49,34 @@ A arquitetura de um \textit{software} de um programa ou sistema computacional é
 \section{\esp Metodologia}
 Nessa seção as fases do projeto e seus respectivos objetivos são apresentados. Visando melhor separar o processo teórico da implementação prática, três etapas foram definidas e realizadas em sequência.
 
-\subsection{{\it Levantamento dos Requisitos / Identificação do Problema}}
-O problema de reuso de \textit{software} foi identificado informalmente pelo autor tendo como principal referência a forma como o desenvolvimento de aplicativos móveis acontece atualmente. Essa necessidade por um reuso de soluções mais amplo foi suportado por outros autores que também já haviam identificado a dificuldade em desenvolver aplicativos móveis e sugerido a utilização da abordagem de desenvolvimento híbrido com alvo em múltiplas plataformas móveis. (Max Lynch, 2014; Adam Bradley, 2013; Sapan Diwakar, 2012; Jose Fermoso, 2009). 
+\subsection{{\it Identificação do Problema}}
+A fim de melhor atender o objetivo deste projeto, uma clarificação e uma análise do estado da arte atual foram realizadas nessa etapa.
 
-Após a identificação do problema e analisado o cenário atual utilizando as observações oferecidas por \cite{Diwakar2012} foi realizada uma pesquisa das ferramentas de desenvolvimento de software multiplataforma atuais, que se encaixavam no perfil do projeto, com o objetivo de identificar e testar em cada plataforma (\textit{web}, \textit{mobile} e \textit{desktop}), as opções para possível utilização futura. 
+O cenário atual de desenvolvimento de \textit{software} para dispositivos móveis foi analisado e de forma mais aprofundada, as técnicas e ferramentas utilizadas no desenvolvimento de aplicações híbridas. Foi identificado que diversos autores já haviam dissertado sobre o \textit{status quo} e as constantes mudanças que essa área vem sofrendo ao longo dos anos. Alguns autores, inclusive, ofereciam soluções teóricas para o problema de baixa reutilização de \textit{software} para múltiplas plataformas \cite{Diwakar2012,ionicFIT}. Estas soluções foram analisadas a fim de realizar uma comparação com a arquitetura sugerida por este projeto nas etapas seguintes.
+
+Após a confirmação do problema de baixa reutilização, foi realizada uma pesquisa das ferramentas de desenvolvimento de software multiplataforma atuais, que se encaixavam no perfil do projeto, com o objetivo de identificar e testar em cada plataforma (\textit{web}, \textit{mobile} e \textit{desktop}), as opções existentes a fim de formar uma opinião técnica mais clara em relação a cada uma para possíveis utilizações no projeto.
 
 \subsection{{\it Especificação da Arquitetura}}
 
-Após pesquisar as ferramentas atuais, teve início a etapa de especificação da Arquitetura sugerida para a resolução do problema identificado. Durante essa etapa, foi produzido um documento contendo a arquitetura sugerida utilizando uma notação de camadas simples.
+Após pesquisar as ferramentas atuais, teve início a etapa de especificação da arquitetura sugerida para a resolução do problema identificado. Durante essa etapa, foi produzido um documento contendo a arquitetura sugerida utilizando uma notação de camadas simples.
 
-As camadas finais foram definidas utilizando os conceitos do DBC em conjunto alguns itens da filosofia Unix sugeridos por \cite{unixPhilosophy} e foram levantadas após diversos rascunhos serem produzidos e testes com as ferramentas selecionadas na etapa anterior terem sido testadas. Os testes, em sua maioria, focavam na facilidade em que um mesmo código pudesse ser distribuído dentro dos requisitos definidos pelo projeto e foram essenciais para que a arquitetura, apesar de essencialmente ser um conceito teórico e abstrato, fosse capaz de possuir uma implementação prática. 
+As camadas finais foram definidas utilizando os conceitos do DBC em conjunto com alguns itens da filosofia Unix sugeridos por \cite{unixPhilosophy} e são o resultado de diversos rascunhos produzidos e testados com as ferramentas selecionadas na etapa anterior. Estes testes, em sua maioria, focavam na facilidade em que um mesmo código pudesse ser distribuído dentro dos requisitos definidos pelo projeto e a medida em que foram executados, algumas arquiteturas sugeridas foram refutadas, quando se mostravam demasiado complexas, de difícil extensão ou se provarem incapazes de solucionar o problema especificado. 
 
-A medida em que os testes foram executados algumas arquiteturas sugeridas foram refutadas quando se provaram demasiado complexas, incapazes de extensão ou por se apresentarem incapazes de solucionar o problema especificado. De uma forma geral, o processo de especificação foi interativo e utilizou uma metodologia ágil, o que segundo \cite{pressman2011} oferece uma validação mais rápida.
+De uma forma geral, o processo de especificação foi interativo e utilizou uma metodologia ágil, o que segundo \cite{pressman2011} oferece uma validação mais rápida.
 
 Após os testes iniciais, as arquiteturas que se provaram teoricamente viáveis foram alinhadas com as ferramentas selecionadas na primeira etapa para que a implementação do protótipo fosse iniciada.
 
 \subsection{{\it Implementação do Protótipo}}
 
-O processo de codificação se baseou nos objetivos adquiridos nas etapas anteriores para realizar a implementação de um protótipo utilizando a arquitetura sugerida. Com base nos testes realizados, foi definido que para uma experiência mais unificada as ferramentas utilizadas utilizariam a mesma linguagem base e possuiriam uma interface programática similar a fim de facilitar a integração entre elas. Uma explicação detalhada da implementação pode ser encontrada em uma seção específica deste artigo.
+O processo de codificação se baseou nos objetivos adquiridos nas etapas anteriores para realizar a implementação de um protótipo utilizando a arquitetura sugerida. Com base nos testes realizados, foi definido que para uma experiência mais unificada as ferramentas utilizariam a mesma linguagem base e possuiriam uma interface programática similar a fim de facilitar a integração entre elas. Uma explicação detalhada da implementação pode ser encontrada em uma seção específica deste artigo.
 
 \section{\esp Tecnologias Utilizadas}
 Nessa seção serão apresentadas as tecnologias utilizadas.
 
 \subsection{\esp AngularJS}
-\textit{AngularJS} é um \textit{framework} \textit{JavaScript} de código aberto que auxilia a criação de \textit{WebApps}, oferecendo alta performance em múltiplas plataformas e é utilizado por milhões de pessoas ao redor do mundo \cite{angularjs}. Seu foco inicial era facilitar o desenvolvimento e teste de aplicação \textit{single-page} oferecendo uma arquitetura \symbolfootnote[1]MVC/\symbolfootnote[2]MVVM para o \textit{front-end}. Apesar de ainda cumprir muito bem esse papel, vem evoluindo e se solidificando como um dos \textit{frameworks} mais utilizados para desenvolvimento de aplicativos, sejam estes \textit{WEB} ou não \cite{angularjs}. É mantido principalmente por uma equipe do Google e conta com o apoio da comunidade \textit{open-source}. Teve sua primeira versão lançada em Outubro de 2010 e sua próxima evolução, denominada \textit{Angular} 2, a que iremos utilizar para a implementação desse artigo, se encontra em Beta.  
+\textit{AngularJS} é um \textit{framework} \textit{JavaScript} de código aberto que auxilia a criação de \textit{WebApps}, oferecendo alta performance em múltiplas plataformas e é utilizado por milhões de pessoas ao redor do mundo \cite{angularjs}. Seu foco inicial era facilitar o desenvolvimento e teste de aplicação \textit{single-page} oferecendo uma arquitetura MVC\footnote[1]{MVC - \textit{\textbf{M}odel \textbf{V}iew \textbf{C}ontroller}}/ MVVM\footnote[2]{MVVM - \textit{\textbf{M}odel \textbf{V}iew \textbf{V}iew \textbf{M}odel}} para o \textit{front-end}. Apesar de ainda cumprir muito bem esse papel, vem evoluindo e se solidificando como um dos \textit{frameworks} mais utilizados para desenvolvimento de aplicativos, sejam estes \textit{WEB} ou não \cite{angularjs}. É mantido principalmente por uma equipe do Google e conta com o apoio da comunidade \textit{open-source}. Teve sua primeira versão lançada em Outubro de 2010 e sua próxima evolução, denominada \textit{Angular} 2, a que iremos utilizar para a implementação desse artigo, se encontra em Beta.  
 
 Com a evolução das tecnologias disponíveis juntamente com a crescente complexidade, inerente de \textit{WebApps} modernos, o \textit{framework} adotou em sua nova versão uma forma mais opinativa e declarativa de desenvolvimento baseada em componentes reutilizáveis. Linguagens com mais recursos e de alto nível, com tipagem mais restritiva como \textit{TypeScript} e \textit{Dart}, facilitam a identificação de erros antes de transpilar o código para \textit{JavaScript} e são consideradas alguns dos pontos mais marcantes e \textit{disruptivos} do \textit{Angular} 2.
-
-\footnote{MVC - \textit{\textbf{M}odel \textbf{V}iew \textbf{C}ontroller}}
-\footnote{MVVM - \textit{\textbf{M}odel \textbf{V}iew \textbf{V}iew \textbf{M}odel}}
 
 \subsection{\esp Apache Cordova}
 
@@ -152,11 +151,11 @@ De acordo com a RFC 6455 \cite{ieeeSE} a comunicação de \textit{WebSockets} se
 
 \section{\esp Implementação}
 
-Nessa seção será detalhada a arquitetura e as ferramentas utilizadas na abordagem.
+Nessa seção será detalhada a arquitetura sugerida e a codificação realizada na implementação prática do protótipo.
 
 \subsection{{\it Arquitetura}}
 
-A arquitetura foi divida em três camadas principais, a fim de desacoplar e separar melhor o conceito e responsabilidade de cada uma. São elas:
+A arquitetura foi divida em três camadas principais, a fim de desacoplar e separar o conceito e responsabilidade de cada uma. São elas:
 
 \begin{enumerate}
 	\item \textbf{Componentes:} Definição e Implementação dos componentes
@@ -164,53 +163,60 @@ A arquitetura foi divida em três camadas principais, a fim de desacoplar e sepa
 	\item \textbf{\textit{Deploy}:} Empacotamento do projeto para distribuição
 \end{enumerate}
 
-Essas camadas funcionam de forma unidirecional, sempre passando o resultado da anterior para a próxima, sendo que os componentes definidos e implementados são eventualmente integrados e por fim empacotados para distribuição em plataformas específicas. Com essa abordagem o projeto pôde ser desenvolvido de forma modular, pois cada camada não precisa se preocupar com a responsabilidade das demais e por serem implementadas de forma separada cada uma pode ser substituída por uma implementação diferente sem que o fluxo sofra consequências negativas.
+Essas camadas funcionam de forma unidirecional, sempre passando o resultado da anterior para a próxima. Seguindo esse conceito, os componentes definidos e implementados na camada de Componente são eventualmente integrados na camada de Aplicação e por fim empacotados para distribuição em plataformas específicas por meio da camada de \textit{Deploy}. 
+
+Com essa abordagem o projeto pôde ser desenvolvido de forma modular, pois cada camada não precisa se preocupar com a responsabilidade das demais e por serem implementadas de forma separada cada uma pode ser substituída por uma implementação diferente sem que o fluxo sofra consequências negativas.
 
 \subsubsection{{\it Camada de Componentes}}
 
-Nessa camada, os componente são definidos e implementados utilizando \textit{TypeScript}, um \textit{superset} da linguagem \textit{JavaScript} que oferece suporte a classes, interfaces, tipagem explícita, entre outras funcionalidades não suportadas pela versão atual do \textit{JavaScript} (ES5).
+O papel desta camada é a definição e implementação de componentes reutilizáveis. Os componentes definidos nessa etapa são encapsulados e planejados de forma a serem atômicos, modulares e independentes dos demais. Ao utilizar estas definições as implementações podem ser compartilhadas de forma mais simples e provêm maior facilidade na sua reutilização.
 
-Ao utilizar essas funcionalidades os componentes implementados podem ser compartilhados de forma mais simples e provêm maior facilidade na sua reutilização por terem em sua definição um formato mais explícito.
+Dois grupos de componentes principais: apresentação e composição, foram definidos visando uma melhor separação de conceitos seguindo a abordagem sugerida por\cite{presentContainerAbramov}. Os componentes de apresentação são responsáveis por como os dados são apresentados e possibilitam um maior nível de reutilização por não salvarem nenhum estado próprio. Já os componentes de composição se preocupam em definir e implementar como as ações são tratadas e os dados se comportam internamente.
 
-Os componentes desenvolvidos foram separados em dois grupos principais, seguindo a abordagem sugerida por\cite{presentContainerAbramov} em componentes de apresentação e composição. Os componentes de apresentação são responsáveis por como os dados são apresentados e possibilitam um maior nível de reutilização por não salvarem nenhum estado próprio. Já os componentes de composição se preocupam em definir e implementar como as ações são tratadas e os dados se comportam internalmente . Geralmente implementações desse tipo são compostas por sub-componentes de apresentação. 
+Durante a implementação os componentes foram codificados utilizando \textit{TypeScript}, um \textit{superset} da linguagem \textit{JavaScript} que oferece suporte a interfaces, tipagem explícita, \textit{generics} e outras funcionalidades não suportadas pela versão atual do \textit{JavaScript} (ES6).
 
-Durante a implementação dessa camada, foi possível perceber os benefícios das tecnologias escolhidas. O \textit{TypeScript} permitiu o uso de \textit{decorators} juntamente com classes utilizando injeção de dependência para criação dos componentes, o que fez com que a codificação ficasse mais explícita e simples, possibilitando um maior nível de abstração e a utilização de metadados para configuração. A abordagem de tipagem explícita também se provou útil ao possibilitar inspeções do código sem a necessidade de execução do interpretador de \textit{JavaScript} e que se alinhou de forma eficaz com a utilização de módulos, uma funcionalidade que durante a implementação do projeto ainda não possui suporte amplo pela versão atual do \textit{JavaScript}. A separação do código em módulos permitiu que a reutilização se tornasse mais clara pois cada componente pôde ser separado em seu próprio módulo. Essa prática só foi adotada após algumas refatorações e se provou útil quando a aplicação começou a crescer pois cada componente utiliza o princípio de responsabilidade única e possui sua própria lógica, independente dos demais.
+Ao longo desse processo, foi possível perceber os benefícios das tecnologias escolhidas. O \textit{TypeScript} permitiu o uso de \textit{decorators}, o que fez com que a codificação ficasse mais simples com a utilização de metadados para configuração dos componentes. A tipagem explícita também se provou útil ao possibilitar inspeções do código sem a necessidade de execução do interpretador de \textit{JavaScript} para identificação de erros. 
 
-A utilização de conceitos de programação funcional também foram essenciais para a codificação eficiente desta camada. A minimização de efeitos colaterais com ampla utilização de funções puras, que utilizam o conceito de imutabilidade de parâmetros e possuem comportamento previsíveis, permitiu que os componentes implementados possuíssem comportamentos e escopos mapeados, fazendo com que sua reutilização se tornasse mais eficaz ao encapsular seu funcionamento interno e não modificando o escopo em que foram inseridos.
+A separação do código em módulos permitiu que a reutilização se tornasse mais clara pois cada componente pôde ser separado e codificado de forma independente, como a arquitetura sugere. Tal prática se provou útil quando a aplicação começou a crescer e novos componentes foram adicionados.
+
+A utilização de conceitos de programação funcional também foi essencial para a codificação eficiente desta camada. A minimização de efeitos colaterais com a ampla utilização de funções puras, que utilizam o conceito de imutabilidade de parâmetros e possuem comportamento previsíveis, permitiu que os componentes implementados possuíssem escopos mapeados, fazendo com que sua reutilização se tornasse mais eficaz ao encapsular seu funcionamento interno.
 
 \subsubsection{{\it Camada de Aplicação}}
 
-Essa camada é responsável por integrar os componentes implementados na anterior de tal maneira que o produto final possua uma árvore de componentes interconectados que possam representar a aplicação final. Essa proposta é a recomendação oficial da biblioteca utilizada, \textit{AngularJS} e também respeita o paradigma de desenvolvimento baseado em componentes \cite{pressman2011}.
+Esta camada é responsável por integrar os componentes implementados na anterior de tal maneira que o produto final possua uma árvore de componentes interconectados que possam representar a aplicação final. Essa proposta é a recomendação oficial da biblioteca utilizada, \textit{AngularJS} e também é embasada no paradigma de desenvolvimento baseado em componentes \cite{pressman2011}.
 
-Além da integração dos componentes de forma estrutural, essa camada também é responsável pelo tratamento de mensagens externas e o encaminhamento de forma normalizada desses dados para outras partes da aplicação por meio do controle de estados.
+Além da integração dos componentes de forma estrutural, esta camada também é responsável pelo tratamento de mensagens externas e o encaminhamento de forma normalizada desses dados para outras partes da aplicação por meio do controle de estados, que é realizado a fim de gerar comportamentos previsíveis e que possibilitem traçar uma linha do tempo das mudanças realizadas.
 
-Nessa camada foi também definido a arquitetura de estado da aplicação. Por utilizar \textit{WebSockets} para comunicação externa, a aplicação necessita ser capaz de tratar diversos eventos assíncronos, além da simples entrada de dados por meio de formulários. Isso fez com que uma estrutura de estados utilizando o padrão de projeto\textit{ Publish/Subscribe} fosse implementada a fim de propagar e publicar tais eventos por toda a aplicação, porém, após os testes iniciais, foi detectado que muitas vezes os estados de variáveis independentes em partes distintas da aplicação não estavam sendo mantidos em sincronia. Esse fator, em adição à necessidade constante do desenvolvedor final sempre ser responsável por adicionar tratadores de eventos a fim de tratar tais mudanças, fez com que esse padrão de projeto fosse substituído por uma implementação que utiliza os conceitos de uma abordagem denominada \textit{Redux}.
+De uma forma geral, esta camada foca na composição dos componentes e a comunicação entre eles, por meio do controle de estados.Com essa abordagem os componentes podem ser implementados na camada anterior sem a necessidade de possuírem uma definição do contexto da aplicação final. Isso permite que uma extensa gama de componentes possa existir e que o desenvolvimento da aplicação em si seja apenas a combinação destes de uma forma funcional, o que, como já foi dito, é um dos princípios do DBC.
 
-Esta abordagem utiliza alguns conceitos do padrão \textit{Publish/Subscribe} e adiciona algumas definições imperativas a fim de prover, seguindo a própria documentação, um gerenciamento de estados com comportamento previsível e que possibilite traçar uma linha do tempo das mudanças realizadas ao utilizar conceitos como imutabilidade e funções puras \cite{redux}.
+Durante a codificação alguns pontos foram repensados pois por utilizar \textit{WebSockets} para comunicação externa, a aplicação necessita ser capaz de tratar diversos eventos assíncronos. Isso fez com que uma estrutura de estados utilizando o padrão de projeto \textit{Publish/Subscribe} fosse implementada, porém  foi detectado que muitas vezes os estados de variáveis independentes em partes distintas da aplicação não estavam sendo mantidos em sincronia. Tal fator, em adição à necessidade constante do desenvolvedor final sempre ser responsável por adicionar tratadores de eventos a fim de reagir a tais mudanças, fez com que esse padrão de projeto fosse substituído por uma implementação baseada nos conceitos sugeridos por \cite{presentContainerAbramov}, denominada \textit{Redux}. Tal abordagem utiliza o conceito de ações explícitas, em que todas as mudanças de estados devem possuir uma ação correspondente, que por sua vez, deve ser emitida a fim de notificar as partes interessadas do evento ocorrido. Esta comunicação utiliza uma abordagem \textit{top-down} de forma que todas as ações enviadas criam um novo estado, que é repassado para os componentes para que estes possam reagir da forma como foram definidos \cite{redux}.
 
-A abordagem também utiliza o conceito de ações explícitas e todas as mudanças de estados devem possuir uma ação correspondente que, por sua vez, deve ser emitida a fim de notificar as partes interessadas do evento ocorrido. Esta comunicação utiliza uma abordage top-down de forma que todas as ações enviadas criam um novo estado que é repassado para todos os componentes, para que estes possam reagir da forma como foram definidos \cite{redux}.
+De forma similar a Camada de Componentes, a codificação foi realizada utilizando o \textit{TypeScript}, que facilitou a integração dos componentes por ser a mesma tecnologia em que foram implementados. A composição dos componentes foi realizada utilizando uma aplicação iniciada com o \textit{template} do \textit{Ionic Framework} em conjunto com o \textit{AngularJS}. O controle de estados, como já dito, foi implementado seguindo o padrão \textit{Redux} e a parte visual se deu por conta da composição dos elementos CSS do \textit{Ionic Framework} em conjunto com os componentes codificados na camada anterior.
 
-De uma forma geral, essa camada é uma abordagem abstrata que foca na composição dos componentes para que os mesmos, quando implementados na camada anterior, possam ser altamente reutilizáveis, necessitando apenas serem importados no local desejado para que possam ser utilizados. Isso permite que uma extensa gama de componentes possa existir e que o desenvolvimento da aplicação em si seja apenas a combinação destes de uma forma funcional, o que, como já foi dito, é um dos princípios do DBC.
 
 \subsubsection{{\it Camada de Deploy}}
-A camada final é a responsável por empacotar a solução implementada e incluir as funcionalidades necessárias para que essa possa ser executada em todas as plataformas suportadas. Isso é realizado utilizando \textit{scripts} pré-determinados para cada plataforma com o intuito de possibilitar customizações específicas para cada uma delas, caso necessário. 
+A camada final é a responsável por empacotar a solução implementada e incluir as funcionalidades necessárias para que a execução seja suportada em todas as plataformas necessárias. 
 
-Apesar ser responsável apenas pelo empacotamento, essa camada possui diferentes implementações por si só, tendo em vista que algumas plataformas não aceitam a combinação de HTML + CSS + \textit{JavaScript} para interpretação de forma nativa ou limitam recursos quando executados via \textit{WebView}. Esta limitação exigiu que arquivos próprios fossem criados visando a execução da aplicação nessas plataformas. Isso foi identificado ao decorrer da implementação quando ao gerar o projeto final da aplicação para empacotamento, era necessário adicionar \textit{scripts} extras para que a plataforma conseguisse identificar a página como um \textit{WebApp}. No caso do \textit{Ionic Framework}, as plataformas suportadas na versão 2 não apresentaram esse problema, porém algumas vezes aplicações executando versões mais antigas na plataforma \textit{Android} 4.4 ou inferior necessitaram ser embarcadas com um navegador próprio, a fim de viabilizar a identificação de diversos recursos nativos, aprimorar a performance e possibilitar um funcionamento transparente para o usuário final.
+Apesar de não ser opinativa na forma como o empacotamento deve ocorrer, a implementação que se provou mais viável foi a utilização de \textit{scripts} pré-determinados com o intuito de possibilitar customizações específicas caso necessário. Os \textit{scripts} devem ser separados por plataforma e implementados utilizando padrões da filosofia Unix \cite{unixPhilosophy}. Apesar da separação, possuem o mesmo fluxo básico: A aplicação gerada na camada anterior é recebida e cada rotina deve tratar os arquivos de forma independente, gerando no final o artefato a ser executado na plataforma adequada.
 
-De forma similar, quando a aplicação foi inicialmente preparada para distribuição em computadores de mesa utilizando a ferramenta \textit{Electron}, foi identificado a necessidade de adicionar arquivos e configurações extras a fim de permitir a renderização correta. O que foi identificado é que a ferramenta utiliza, fundamentalmente, duas \textit{threads}, sendo uma responsável pelo código da aplicação e outra pela renderização do HTML. Essa separação, apesar de útil e performática, necessita um arquivo extra e configurações específicas para identificar momentos em que a aplicação necessita ser renderizada novamente, como por exemplo ao receber eventos assíncronos via \textit{WebSockets} quando fora de foco. Tal peculiaridade fez com que um \textit{script} mais elaborado fosse desenvolvido a fim de permitir que as aplicações distribuídas por esse meio funcionassem da mesma forma que em aplicações sem essa separação de \textit{threads}.
+Durante a codificação, foi possível identificar diversos pontos que se provaram inerentes para domínios de plataformas específicas. Em razão deste fato, durante a evolução do projeto esta camada foi a que mais sofreu alterações durante a codificação, pois diversas vezes foi necessário alterar os \textit{scripts} a fim de padronizar o processo de empacotamento para cada plataforma, chegando até a quase se tornar um ponto que poderia refutar a arquitetura por falta de ferramentas que permitissem sua implementação prática. Isso fez com que uma pesquisa mais aprofundada em ferramentas de automação fosse realizada e após uma refatoração com base nas lições aprendidas foi possível implementar \textit{scripts} expansíveis que possibilitaram o reuso de soluções e a padronização de tratamentos para casos específicos, fazendo com que a camada funcionasse de forma eficiente.
 
-Durante a evolução do projeto essa camada foi a que mais sofreu alterações pois diversas vezes foi necessário alterar os \textit{scripts} a fim de padronizar o processo de empacotamento de cada plataforma, chegando até a quase se tornar um ponto que poderia refutar a arquitetura por falta de ferramentas que permitissem sua implementação prática. Isso fez com que uma pesquisa mais aprofundada em ferramentas de automação fosse realizada e após uma refatoração com base nas lições aprendidas e com a adoção da ferramenta \textit{Gulp} que trabalha com \textit{Streams} de dados, foi possível implementar \textit{scripts} expansíveis que possibilitaram o reuso de soluções e a padronização de tratamentos para casos específicos, fazendo com que a camada funcionasse de forma eficiente.
+Diferentes implementações foram codificadas tendo em vista que algumas plataformas não aceitam a combinação de HTML + CSS + \textit{JavaScript} para interpretação de forma nativa. Tal limitação foi identificada ao decorrer da implementação quando ao gerar o projeto final da aplicação para empacotamento, era necessário adicionar arquivos extras para que a plataforma conseguisse identificar a aplicação como válida. No caso do \textit{Ionic Framework}, as plataformas suportadas na versão 2 não apresentaram problema, porém algumas vezes, aplicações executando na plataforma \textit{Android} 4.4 ou inferior necessitaram ser embarcadas com um navegador próprio, a fim de viabilizar a identificação de diversos recursos nativos, aprimorar a performance e possibilitar um funcionamento transparente para o usuário final.
 
-\subsection{{\it Principais funcionalidades}}
+De forma similar, quando a aplicação foi inicialmente preparada para distribuição em computadores de mesa utilizando a ferramenta \textit{Electron}, foi identificado a necessidade de adicionar arquivos e configurações extras a fim de permitir a renderização correta. O que foi identificado é que a ferramenta utiliza, fundamentalmente, duas \textit{threads}, sendo uma responsável pelo código da aplicação e outra pela renderização do HTML. Esta separação, apesar de útil e performática, necessita um arquivo contendo codificação extra e configurações específicas para identificar momentos em que a aplicação necessita ser renderizada novamente, como por exemplo, ao receber eventos assíncronos via \textit{WebSockets} quando fora de foco. Tal peculiaridade fez com que um \textit{script} mais elaborado fosse desenvolvido a fim de permitir que as aplicações distribuídas por esse meio funcionassem da mesma forma que em aplicações sem uma separação de \textit{threads} similar.
 
-A ferramenta construída durante a implementação desse artigo, oferece como funcionalidade principal o compartilhamento e exibição em tempo real de \textit{links} entre os dispositivos conectados.
-Os \textit{links} compartilhados irão apresentar uma breve descrição e uma imagem de exibição escolhida por inferência ao fazer uma breve análise dos metadados da página. Cada \textit{link} também irá possuir um indicador do tipo de plataforma de origem e qual usuário foi responsável por seu compartilhamento.
+\subsection{Protótipo}
 
-\subsection{{\it Estrutura de Comunicação}}
+Nessa seção contêm um detalhamento das principais funcionalidades e componentes do protótipo codificado.
 
-A comunicação entre os dispositivos conectados se dará por meio de eventos emitidos através de uma comunicação bidirecional com o \textit{back-end} por meio de \textit{WebSockets}. A figura a seguir exemplifica as interfaces utilizadas para identificar as mensagens transmitidas, sendo que todas as mensagens ,quando recebidas, serão tratadas e despachadas para os componentes responsáveis utilizando nossa arquitetura \textit{Redux}. 
+\subsubsection{{\it Principais funcionalidades}}
 
-As interfaces representadas na figura \ref{fig:figura2} tem como objetivo principal facilitar e formalizar o formato no qual os dados serão enviados nas mensagens transmitidas via \textit{WebSockets}.
+A aplicação construída durante a implementação desse artigo, oferece como principal funcionalidade o compartilhamento e exibição em tempo real de \textit{links} entre os dispositivos conectados.
+Os \textit{links} compartilhados irão apresentar uma breve descrição e uma imagem de exibição escolhida por inferência ao ser realizada uma breve análise dos metadados da página resultante. Cada \textit{link} também irá possuir um indicador do tipo de plataforma de origem e qual usuário foi responsável por seu compartilhamento.
+
+\subsubsection{{\it Estrutura de Comunicação}}
+
+A comunicação entre os dispositivos conectados se dará por meio de eventos emitidos através de uma comunicação bidirecional com o \textit{back-end} por meio de \textit{WebSockets}. A figura \ref{fig:figura2} exemplifica as interfaces utilizadas para identificar as mensagens transmitidas, sendo que todas, quando recebidas, serão tratadas e despachadas para os componentes responsáveis utilizando o controle de estado da aplicação.
 
 \begin{figure}[ht]
 	\centering	
@@ -226,12 +232,14 @@ As interfaces representadas na figura \ref{fig:figura2} tem como objetivo princi
 \end{figure}
 \vspace{-0.5cm}
 
-\subsection{{\it Principais Componentes}}
-Seguindo a explicação da camada de componentes, essa seção tem por objetivo explicar de forma mais detalhada como se deu a codificação e identificação dos componentes desenvolvidos para o protótipo.
+\subsubsection{{\it Principais Componentes}}
+Esta seção tem por objetivo explicar de forma mais detalhada como se exerceu a codificação dos componentes desenvolvidos para o protótipo.
 
-Com a utilização do\textit{ Ionic Framework}, foram desenvolvidos alguns componentes que representam as páginas da aplicação. Esses componentes podem ser identificados no código por meio do \textit{decorator \textbf{@Page}} e tem por objetivo definir a composição de uma página da aplicação. Esses componentes foram separados em pastas distintas que contêm, no mínimo, um arquivo \textbf{.html} para definição da estrutura da página utilizando \textit{tags} HTML e componentes próprios com a linguagem de \textit{template} do \textit{AngularJS}, um arquivo \textbf{.scss} que é utilizado pelo pré-processados de CSS, \textit{Sass}, para a definição da folha de estilo da página e um arquivo \textbf{.ts} onde a classe que implementa a página é definida utilizando o \textit{TypeScript}. Essa separação por pastas permite trabalhar com estes componentes de páginas de forma modular e faz com que todo o código e folhas de estilo sejam tratados como privados, ou seja, não afetam as outras partes da aplicação, o que normalmente não acontece em aplicações web tradicionais.
+De acordo com os conceitos definidos pela Camada de Componentes, ocorreu a separação de todas as funcionalidades da aplicação em componentes reutilizáveis com o objetivo de realizar a composição e integração da árvore de componentes que representa a aplicação final.
 
-Alguns exemplos de componentes de página desenvolvidos no código são: \textit{HomePage, LoginPage e CreatorModalPage}.
+Durante a codificação, estes componentes foram separados em pastas distintas que contêm, no mínimo, um arquivo \textbf{.html} para definição da estrutura da página utilizando \textit{tags} HTML e componentes próprios com a linguagem de \textit{template} do \textit{AngularJS}, um arquivo \textbf{.scss} que é utilizado pelo pré-processados de CSS, \textit{Sass}, para a definição da folha de estilo da página e um arquivo \textbf{.ts} onde a classe que implementa a página é definida utilizando o \textit{TypeScript}. Essa separação por pastas permite uma abordagem modular e faz com que todo o código e folhas de estilo sejam tratados como privados, ou seja, não afetam as outras partes da aplicação, o que normalmente não acontece em aplicações \textit{WEB} tradicionais.
+
+Com a utilização do\textit{ Ionic Framework}, foram desenvolvidos alguns componentes que representam as páginas da aplicação, que podem ser identificados no código por meio do \textit{decorator \textbf{@Page}} e tem por objetivo definir a composição de uma página da aplicação. Alguns exemplos: \textit{HomePage, LoginPage e CreatorModalPage}. A Figura \ref{fig:figura3} representa a codificação necessária para a página responsável pelo \textit{login} dos usuários no sistema. Como pode ser observado, a classe implementada não possui nenhuma lógica interna, sendo responsável apenas por importar os módulos necessários e inicializar o formulário que será, eventualmente, responsável pela estratégia de \textit{login}.
 
 \begin{figure}[ht]
 	\centering	
@@ -247,12 +255,13 @@ Alguns exemplos de componentes de página desenvolvidos no código são: \textit
 \end{figure}
 \vspace{-0.5cm}
 
-Seguindo esse mesmo modelo modular, diversos outros componentes foram criados em pastas distintas ainda respeitando os conceitos sugeridos por \cite{presentContainerAbramov} de forma a otimizar a reutilização. Durante a implementação do projeto, foi possível identificar que os componentes menores eram reutilizados em maior quantidade e que a composição de componentes se provou mais útil do que a extensão dos mesmos. Esse fato apoia os conceitos da abordagem do DBC e fez com que a abstração, encapsulamento e modularização estivessem no cerne dos componentes desenvolvidos.
+Em um nível abaixo dos componentes responsáveis pela definição das páginas da aplicação, foram implementados diversos componentes para atender os requisitos necessários da aplicação. Alguns exemplos são: \textit{UrlPreview, UrlContentPreview, UrlImagePreview, UrlMessageForm, UrlList, WelcomeMessageCard, NewMessageButton}. Dentre estes componentes, é possível identificar alguns que, diferente dos citados anteriormente, possuem uma lógica interna, que seguindo os conceitos sugeridos por \cite{presentContainerAbramov}, são os chamados componentes de composição e apesar de possuírem uma importância singular para o projeto, estão presente em menor quantidade pois foi possível perceber durante a implementação do projeto, que os componentes menores eram reutilizados em maior quantidade e que a composição de componentes se provou mais útil do que a extensão dos mesmos. Com isso, a maioria dos componentes implementados, se encaixam na categoria de apresentação, de forma que apenas uma minoria possui alguma lógica interna. 
 
-Alguns exemplos de componentes desenvolvidos são: \textit{UrlPreview, UrlContentPreview, UrlImagePreview, UrlMessageForm, UrlList, WelcomeMessageCard, NewMessageButton.}
 
-\subsection{{\it Telas do Protótipo}}
-Adicionar prints
+A figura \ref{fig:figura4} representa uma árvore com os principais componentes implementados na aplicação protótipo.
+
+\subsubsection{{\it Telas do Protótipo}}
+A figura \ref{fig:figura5} representa o comportamento da aplicação final em diferentes plataformas.
 
 \begin{figure}[ht]
 	\centering	
@@ -264,11 +273,11 @@ Adicionar prints
 	% Caption e fonte 
 	\vspace{-0.2cm}
 	\\\textbf{\footnotesize Fonte: \cite{pressman2011} }
-	\label{fig:figura3}
+	\label{fig:figura5}
 \end{figure}
 \vspace{-0.5cm}
 
-print
+
 
 \section{\esp Conclusão}
 
