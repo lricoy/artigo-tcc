@@ -12,11 +12,11 @@ Computadores fazem parte de nosso dia a dia de forma onipresente. Utilizamos nos
 
 Durante muito tempo, a maioria dos aplicativos desenvolvidos era destinado a uma mesma plataforma, por exemplo, computadores de mesa ou dispositivos móveis e algumas vezes para Sistemas Operacionais (SO) diferentes. Caso fosse necessário atender uma nova plataforma ou SO, o aplicativo deveria ser reescrito a partir do zero, muitas vezes em uma linguagem diferente e sem reaproveitar o código existente, para que este novo requisito fosse atendido. Tamanha complexidade dificultou que desenvolvedores mais experientes pudessem utilizar linguagens, ferramentas e técnicas já conhecidas e difundidas para produzir aplicativos, que utilizando o mesmo código, fossem aceitos em mais de uma plataforma.
 
-Com a grande disseminação de tecnologias de computação móvel, como os \textit{smartphones}, este problema se tornou cada vez mais crítico. De acordo com Moore, Van Baalen e Shevchenko (2015), a demanda por aplicações móveis nunca foi tão alta e os desenvolvedores vem sofrendo para criar experiências atrativas nas principais plataformas e atingir os maiores mercados da área. Isso nos mostra, que apesar de efervescente, o mercado não está preparado para atender todas as expectativas dos clientes atuais.
+Com a grande disseminação de tecnologias de computação móvel, como os \textit{smartphones}, este problema se tornou cada vez mais crítico. De acordo com \cite{ionEdge}, a demanda por aplicações móveis nunca foi tão alta e os desenvolvedores vem sofrendo para criar experiências atrativas nas principais plataformas e atingir os maiores mercados da área. Isso nos mostra, que apesar de efervescente, o mercado não está preparado para atender todas as expectativas dos clientes atuais.
 
-Para encarar este problemas, iniciativas como o \textit{Intel XDK}, \textit{Apache Cordova}, \textit{Adobe Phonegap} e \textit{Microsoft Xamarin} foram criadas visando permitir o desenvolvimento para múltiplas plataformas de uma forma expansível e customizável, com experiências e funcionalidades específicas em cada uma. 
+Para encarar este problemas, iniciativas como o \textit{Intel XDK}, \textit{Apache Cordova} e \textit{Microsoft Xamarin} foram criadas visando permitir o desenvolvimento para múltiplas plataformas de uma forma expansível e customizável, com experiências e funcionalidades específicas em cada uma. 
 
-Atualmente, uma abordagem comum e que possui grande adoção é o empacotamento de \textit{WebApps} em \textit{containers} nativos. Esta abordagem possui duas grandes vantagens: a possibilidade de utilizar diversas bibliotecas e ferramentas já disseminadas e testadas no desenvolvimento web e a facilidade para desenvolvimento e validação do produto desenvolvido, tendo em consideração que o produto final nada mais é do que um \textit{website} com acesso aos recursos do dispositivo por meio do \textit{container} em que foi empacotado. Aplicativos desenvolvidos desta forma são normalmente denominados "híbridos".
+Atualmente, uma abordagem que possui grande adoção é o empacotamento de \textit{WebApps} em \textit{containers} nativos. Esta abordagem possui duas grandes vantagens: a possibilidade de utilizar diversas bibliotecas e ferramentas já disseminadas e testadas no desenvolvimento \textit{WEB} e a facilidade para validação do produto desenvolvido, tendo em consideração que o resultado nada mais é do que um \textit{website} com acesso aos recursos do dispositivo por meio do \textit{container} em que foi empacotado. Aplicativos desenvolvidos desta forma são normalmente denominados "híbridos".
 
 Este artigo tem por objetivo principal a elaboração e formalização de uma arquitetura que permita o desenvolvimento de aplicativos híbridos multiplataforma de forma eficaz, possibilitando o uso de diversos padrões e ferramentas já existentes e o reaproveitamento do mesmo código entre plataformas. Como objetivo secundário está a apresentação de um um protótipo, que utilizando da arquitetura elaborada, será capaz de ser distribuído para sistemas \textit{Desktop} tradicionais (Linux, Windows, Mac), dispositivos móveis (iOS, Android, Windows Phone) ou como um site na \textit{WEB} sem alterações em suas camadas internas, mudando apenas a forma de apresentação em cada plataforma, quando necessário.
 
@@ -38,16 +38,25 @@ A ideia da reutilização, segundo \cite{pressman2011} não é nova, pois vem se
 	\item \textbf{Reúso de objetos e funções:} Funções ou componentes que implementa uma única função, como uma função matemática ou uma classe de objetos  podem ser reutilziados na forma de bibliotecas. 
 \end{enumerate}
 
-A construção com base em componentes, é, segundo \cite{pressman2011}, o caminho o qual a indústria está trilhando. Apesar da afirmação do autor ainda não possuir comprovação ou dados para validação segundo \cite{28dbc}, o desenvolvimento de componentes reutilizáveis vem recebendo cada vez mais adeptos segundo <PETE BACON WHITE PAPER DO GOOGLE>  e é a abordagem utilizada por esse artigo.
+Segundo \cite{pressman2011}, a construção com base em componentes é o caminho o qual a indústria estaria trilhando. Apesar da afirmação do autor ainda não possuir comprovação desde sua publicação, segundo \cite{28dbc}, \cite{ngConfComponents} afirma que o desenvolvimento de componentes reutilizáveis vem recebendo cada vez mais adeptos atualmente e é a abordagem utilizada por esse artigo.
 
 \subsection{\esp Arquitetura de Software}
 
-A Arquitetura de \textit{Software} é uma área da Engenharia de \textit{Software} que visa relacionar e estruturar os componentes e como eles interagem entre si através de interfaces, expondo ao final a estrutura do sistema de uma forma abstrata. É definida por (Len Bass et al., 2012), como:
+A Arquitetura de \textit{Software} é uma área da Engenharia de \textit{Software} que visa relacionar as estruturas de um sistemas e como elas interagem entre si, expondo ao final a estrutura do sistema de uma forma abstrata. Segundo \cite{ieeeSE} a organização fundamental de um sistema e suas relações é parte essencial da definição de arquitetura. Em concordância, \cite{lesBass2012} considera que Arquitetura de \textit{Software} é melhor definida como:
 
+\begin{citacaodireta}
 A arquitetura de um \textit{software} de um programa ou sistema computacional é a estrutura ou estruturas de um sistema, que inclui os elementos de \textit{software}, as propriedades externamente visíveis destes elementos, e os relacionamentos entre eles. Arquitetura é responsável pelas interfaces públicas dos elementos. Seus detalhes privados (detalhes que tenham a ver somente com a implementação interna) não fazem parte da arquitetura.
+\cite{lesBass2012}
+\end{citacaodireta}
+
+Estas definições identificam claramente a abstração que a Arquitetura de \textit{Software} propõe. Ao invés de ser responsável por definir itens relacionados a implementação como algoritmos e estruturas de dados específicos, a arquitetura foca em estruturar e descrever as partes do sistemas e suas interações na forma de "caixas-pretas" \cite{lesBass2012}, encapsulando o funcionamento interno de cada uma a fim de apresentar em mais alto nível, uma visão abstrata. 
+
+Esta estruturação é aplicada de forma diferente em cada sistema, pois a arquitetura sempre considera o contexto e domínio do problema em que está introduzida. Devemos ter em mente que um sistema bem sucedido depende de uma boa arquitetura. Em razão desta necessidade, padrões arquiteturais foram surgindo ao longo do tempo e quando se provaram úteis, foram documentados e disseminados \cite{lesBass2012}.
+
+Estes padrões foram criados visando solucionar problemas específicos e evoluíram em razão do amadurecimento da área. Diferente de quando a Arquitetura de \textit{Software} começou a ser formalizada dentro da Engenharia, diversos padrões já existem e foram mapeados e comprovados a fim de prover direções para a abordagem de situações específicas, permitindo uma expansão embasada no conhecimento adquirido ao longo do tempo \cite{sommer07}. Ainda de acordo com o autor, alguns padrões já estruturados e disseminados são: Cliente-Servidor, Desenvolvimento em camadas(\textit{Multi-tier}), \textit{Pipes} e Filtros, \textit{Blackboard}, entre outros. Estes padrões, seguindo o conceito de avaliação sugerido por \cite{lesBass2012}, não são necessariamente boas arquiteturas, mas sua disseminação prova que são boas escolhas para contextos e domínios específicos. De uma forma geral, uma Arquitetura de \textit{Software} não é inerentemente boa ou ruim, mas deve ser avaliada dentro do contexto com os objetivos que visa cumprir a fim de se definir sua efetividade \cite{lesBass2012}.
 
 \section{\esp Metodologia}
-Nessa seção as fases do projeto e seus respectivos objetivos são apresentados. Visando melhor separar o processo teórico da implementação prática, três etapas foram definidas e realizadas em sequência.
+Nessa seção as fases do projeto e seus respectivos objetivos são apresentados. Visando melhor separar o processo teórico da implementação prática, quatro etapas foram definidas e realizadas em sequência.
 
 \subsection{{\it Identificação do Problema}}
 A fim de melhor atender o objetivo deste projeto, uma clarificação e uma análise do estado da arte atual foram realizadas nessa etapa.
@@ -60,11 +69,17 @@ Após a confirmação do problema de baixa reutilização, foi realizada uma pes
 
 Após pesquisar as ferramentas atuais, teve início a etapa de especificação da arquitetura sugerida para a resolução do problema identificado. Durante essa etapa, foi produzido um documento contendo a arquitetura sugerida utilizando uma notação de camadas simples.
 
-As camadas finais foram definidas utilizando os conceitos do DBC em conjunto com alguns itens da filosofia Unix sugeridos por \cite{unixPhilosophy} e são o resultado de diversos rascunhos produzidos e testados com as ferramentas selecionadas na etapa anterior. Estes testes, em sua maioria, focavam na facilidade em que um mesmo código pudesse ser distribuído dentro dos requisitos definidos pelo projeto e a medida em que foram executados, algumas arquiteturas sugeridas foram refutadas, quando se mostravam demasiado complexas, de difícil extensão ou se provarem incapazes de solucionar o problema especificado. 
+As camadas finais foram definidas utilizando os conceitos do desenvolvimento baseado em componentes (DBC) em conjunto com alguns itens da filosofia Unix sugeridos por \cite{unixPhilosophy} e são o resultado de diversos rascunhos produzidos e testados com as ferramentas selecionadas na etapa anterior. Estes testes, em sua maioria, focavam na facilidade em que um mesmo código pudesse ser distribuído dentro dos requisitos definidos pelo projeto e a medida em que foram executados, algumas arquiteturas sugeridas foram refutadas, quando se mostravam demasiado complexas, de difícil extensão ou se provarem incapazes de solucionar o problema especificado. 
 
 De uma forma geral, o processo de especificação foi interativo e utilizou uma metodologia ágil, o que segundo \cite{pressman2011} oferece uma validação mais rápida.
 
 Após os testes iniciais, as arquiteturas que se provaram teoricamente viáveis foram alinhadas com as ferramentas selecionadas na primeira etapa para que a implementação do protótipo fosse iniciada.
+
+\subsection{{\it Definição dos Componentes}}
+
+Nesta etapa, os principais componentes foram definidos e identificados para serem utilizados na aplicação final.
+% e foi produzido o código-fonte inicial para diversos componentes. 
+Após a definição da arquitetura, um repositório foi criado a fim de armazenar e agrupar os componentes implementados nesta etapa. Seguindo os conceitos da Engenharia de \textit{Software} sugeridos por \cite{pressman2011}, a codificação só ocorreu após uma breve elaboração dos requisitos necessários. Essa identificação teve formato informal e se baseou nas especificações das funcionalidades do protótipo como base. Utilizando os requisitos necessários e o modelo sugerido pela arquitetura para separação e elaboração dos componentes, o processo de identificação e codificação foi realizado. Ao final desta etapa, o repositório continha praticamente todos os componentes utilizados na implementação do protótipo.
 
 \subsection{{\it Implementação do Protótipo}}
 
@@ -84,7 +99,9 @@ O \textit{Apache Cordova} foi criado inicialmente por integrantes da empresa \te
 
 O \textit{Cordova} possibilita que desenvolvedores construam aplicações para dispositivo móveis ao empacotar os arquivos HTML, CSS e \textit{JavaScript} em um \textit{container} nativo. Este \textit{container} possui acesso a diversos recursos do dispositivo em que está sendo executado como por exemplo bibliotecas do sistema operacional e recursos de hardware e expõe uma API em \textit{JavaScript} que pode ser consumida pela própria aplicação para acessar esses recursos, não necessitando implementações diferenciadas para plataformas específicas por parte do produto final, ficando isso a cargo da própria biblioteca de \textit{plugins} nativos do \textit{Cordova} \cite{Diwakar2012}.
 
-Por utilizar esta abordagem de empacotamento, os aplicativos criados, apesar de serem distribuídos como código nativo, são considerados híbridos, pois toda a renderização da interface de apresentação é realizada em uma \textit{WebView} (um processo similar ao executado por navegadores para a exibição de páginas \textit{WEB}) e não com componentes nativos da plataforma. Na mesma direção, os aplicativos não são considerados \textit{WebApps}, como um site tradicional, pois além do modo de distribuição diferenciado, possuem acesso as APIs do dispositivo, normalmente bloqueadas para aplicações não-nativas. Essa diferenciação é importante pois possui um impacto significante na performance e fluidez de alguns aplicativos desenvolvidos nesse formato híbrido, tendo em vista que ao utilizar ferramentas web para renderizar a interface, lentidões e perdas de performance podem ser percebidas em comparação com aplicativos totalmente nativos \cite{Diwakar2012}.
+Por utilizar esta abordagem de empacotamento, os aplicativos criados, apesar de serem distribuídos como código nativo, são considerados híbridos, pois toda a renderização da interface de apresentação é realizada em uma \textit{WebView} (um processo similar ao executado por navegadores para a exibição de páginas \textit{WEB}) e não com componentes nativos da plataforma. Na mesma direção, os aplicativos não são considerados \textit{WebApps}, como um site tradicional, pois além do modo de distribuição diferenciado, possuem acesso as APIs do dispositivo, normalmente bloqueadas para aplicações não-nativas. 
+
+%Essa diferenciação é importante pois possui um impacto significante na performance e fluidez de alguns aplicativos desenvolvidos nesse formato híbrido, tendo em vista que ao utilizar ferramentas web para renderizar a interface, lentidões e perdas de performance podem ser percebidas em comparação com aplicativos totalmente nativos \cite{Diwakar2012}.
 
 De acordo com \cite{CordovaLynch2014}, um dos criadores do \textit{Ionic Framework}, um ponto importante e muito contestado ao utilizar a abordagem de aplicações híbridas com o \textit{Apache Cordova} é a disponibilidade de \textit{plugins} para acessar os recursos nativos. Ao longo da evolução da ferramenta, muitos \textit{plugins} foram criados visando oferecer um acesso transparente as funcionalidades em todas as plataformas, isso faz com que o \textit{Apache Cordova}, ainda de acordo com o autor, seja capaz de realizar a interface com praticamente todo tipo de recurso que o desenvolver necessita na aplicação móvel. A tabela abaixo ilustra bem a grande disponibilidade e variedade de \textit{plugins} e o suporte a cada um nas principais plataformas utilizadas com a ferramenta. 
 
@@ -111,12 +128,12 @@ De acordo com \cite{CordovaLynch2014}, um dos criadores do \textit{Ionic Framewo
 	\end{tabular}
 \end{table}
 
-Considerando os diversos benefícios oriundos da utilização do \textit{Apache Cordova}, diversas ferramentas foram construídas o utilizando como base, oferecendo uma camada adicional de abstração e produtividade. \textit{Ionic Framweork} e \textit{Telerik Platform} são alguns exemplos de ferramentas já difundidas no mercado. No decorrer desse artigo, o \textit{Apache Cordova} será utilizado indiretamente para facilitar o acesso aos recursos nativos por meio do \textit{Ionic Framework}.
+Considerando os benefícios oriundos da utilização do \textit{Apache Cordova}, diversas ferramentas foram construídas o utilizando como base, oferecendo uma camada adicional de abstração e produtividade. \textit{Ionic Framweork} e \textit{Telerik Platform} são alguns exemplos de ferramentas já difundidas no mercado. No decorrer desse artigo, o \textit{Apache Cordova} será utilizado indiretamente para facilitar o acesso aos recursos nativos por meio do \textit{Ionic Framework}.
 \subsection{\esp Ionic Framework}
 
 \textit{Ionic} é um \textit{framework JavaScript} de código aberto. Criado no final de 2012, é hoje a tecnologia multiplataforma mais popular para aplicativos móveis, tendo sido utilizado na criação de 1.3 milhões de aplicativos apenas em 2015 \cite{ionic2015}. De acordo com \cite{ionicFIT}, um dos criadores da ferramenta, o foco do \textit{ Ionic Framework} é aprimorar a interface do usuário ao oferecer uma série de bibliotecas com elementos HTML, CSS e \textit{JavaScript} pré-compilados e otimizados para dispositivos móveis. A ferramenta utiliza todas as vantagens do \textit{Apache Cordova} e tenta suprir a necessidade dos aplicativos possuírem elementos de interface similares aos que os usuários já estão acostumados em cada plataforma. Ainda nas palavras do autor, o \textit{framework} possui outros objetivos como promover padrões de design recomendados e documentar melhores práticas.
 
-Os projetos criados com o \textit{framework} utilizam, por padrão, o \textit{AngularJS} visando facilitar o desenvolvimento de aplicações mais robustas. Diferentemente do primeiro, que oferece uma extensa gama de funcionalidades para diferentes necessidades, o \textit{Ionic Framework} foca em oferecer componentes de interface e interação com o usuário para que a experiência de uso respeite o alto padrão de qualidade que os usuários esperam de aplicativos nativos atualmente \cite{ionicFIT}. Algumas de suas funções são a renderização otimizada de listas, criação de formulários com componentes nativos, customização e padronização dos elementos para a plataforma em que o aplicativo esteja executando, transição entre páginas e identificação de recursos por meio de API's simplificadas.
+%Os projetos criados com o \textit{framework} utilizam, por padrão, o \textit{AngularJS} visando facilitar o desenvolvimento de aplicações mais robustas. Diferentemente do primeiro, que oferece uma extensa gama de funcionalidades para diferentes necessidades, o \textit{Ionic Framework} foca em oferecer componentes de interface e interação com o usuário para que a experiência de uso respeite o alto padrão de qualidade que os usuários esperam de aplicativos nativos atualmente \cite{ionicFIT}. Algumas de suas funções são a renderização otimizada de listas, criação de formulários com componentes nativos, customização e padronização dos elementos para a plataforma em que o aplicativo esteja executando, transição entre páginas e identificação de recursos por meio de API's simplificadas.
 
 Um exemplo de como alguns componentes oferecidos pelo \textit{framework} se adaptam para plataformas diferentes é ilustrado na Figura \ref{fig:figura1}.
 
@@ -124,12 +141,12 @@ Um exemplo de como alguns componentes oferecidos pelo \textit{framework} se adap
 	\centering	
 	\caption[\hspace{0.1cm}Comparativo de telas em diferentes dispositivos.]{Comparativo de telas em diferentes dispositivos}
 	\vspace{-0.4cm}
-	\includegraphics[width=0.6\textwidth]{figuras/ComparativodeTelasIonic.png}
+	\includegraphics[width=0.8\textwidth]{figuras/ComparativodeTelasIonic.png}
 	% Caption centralizada
 	% 	\captionsetup{justification=centering}
 	% Caption e fonte 
 	\vspace{-0.2cm}
-	\\\textbf{\footnotesize Fonte: \cite{pressman2011} }
+	\\\textbf{\footnotesize Fonte: \cite{ionicDocs} }
 	\label{fig:figura1}
 \end{figure}
 \vspace{-0.5cm}
@@ -145,7 +162,7 @@ De acordo com a especificação da \cite{htmlStandard} a interface de \textit{We
 
 Na arquitetura cliente-servidor tradicional, no qual a \textit{WEB} foi construída, as conexões utilizam um padrão HTTP multiplexado, onde é de responsabilidade do cliente iniciar a conexão e requisitar dados, enquanto que a responsabilidade do servidor é atender essas requisições e retornar os dados solicitados. Esse paradigma foi, durante muitos anos, a única forma no qual as aplicações web conseguiam transmitir dados entre a aplicação cliente e o servidor. Com a especificação da interface de \textit{WebSockets}, é possível que conexões persistentes sejam criadas conectando o cliente e servidor, possibilitando que ambas as partes iniciem a transmissão de dados a qualquer momento.
 
-De acordo com a RFC 6455 \cite{ieeeSE} a comunicação de \textit{WebSockets} se inicia com um \textit{handshake} e da mesma forma que o paradigma anterior, o cliente envia uma requisição HTTP com a única adição de um cabeçalho adicional do tipo \textit{Upgrade}. Este cabeçalho informa ao servidor que o cliente deseja estabelecer uma conexão do tipo \textit{WebSocket} e caso a requisição seja aceita e o servidor ofereça suporte a esse tipo de protocolo, a conexão bidirecional é estabelecida e ambos os lados podem iniciar a transmissão de dados , que são transmitidos por meio de mensagens baseadas em \textit{frames}.
+%De acordo com a RFC 6455 \cite{ieeeSE} a comunicação de \textit{WebSockets} se inicia com um \textit{handshake} e da mesma forma que o paradigma anterior, o cliente envia uma requisição HTTP com a única adição de um cabeçalho adicional do tipo \textit{Upgrade}. Este cabeçalho informa ao servidor que o cliente deseja estabelecer uma conexão do tipo \textit{WebSocket} e caso a requisição seja aceita e o servidor ofereça suporte a esse tipo de protocolo, a conexão bidirecional é estabelecida e ambos os lados podem iniciar a transmissão de dados , que são transmitidos por meio de mensagens baseadas em \textit{frames}.
 
 %Atualmente, o suporte a WebSockets por navegadores é de 87.65% (Can I Use, ) porém muitas vezes servidores de proxy ou firewall administrativos podem bloquear a transmissão de mensagens por meio do protocolo. Visando uma maior abrangência e tolerância a falhas, esse artigo irá utilizar a bibllioteca SocketIO, que além de WebSockets, implementa outros protocolos de transmissão como JSONP, Flash Messages, Polling, Long-polling, entre outros ( Socket.IO, ).
 
@@ -163,9 +180,23 @@ A arquitetura foi divida em três camadas principais, a fim de desacoplar e sepa
 	\item \textbf{\textit{Deploy}:} Empacotamento do projeto para distribuição
 \end{enumerate}
 
-Essas camadas funcionam de forma unidirecional, sempre passando o resultado da anterior para a próxima. Seguindo esse conceito, os componentes definidos e implementados na camada de Componente são eventualmente integrados na camada de Aplicação e por fim empacotados para distribuição em plataformas específicas por meio da camada de \textit{Deploy}. 
+Essas camadas funcionam de forma unidirecional, sempre passando o resultado da anterior para a próxima. Seguindo esse conceito, os componentes definidos e implementados na camada de Componente são eventualmente integrados na camada de Aplicação e por fim empacotados para distribuição em plataformas específicas por meio da camada de \textit{Deploy}. A figura \ref{fig:figura6} ilustra este processo de forma simplificada.
 
-Com essa abordagem o projeto pôde ser desenvolvido de forma modular, pois cada camada não precisa se preocupar com a responsabilidade das demais e por serem implementadas de forma separada cada uma pode ser substituída por uma implementação diferente sem que o fluxo sofra consequências negativas.
+Com essa abordagem o projeto pôde ser desenvolvido de forma modular, pois cada camada não precisa se preocupar com a responsabilidade das demais e por serem implementadas de forma separada cada uma pode ser substituída por diferentes implementações sem que o fluxo sofra consequências negativas.
+
+\begin{figure}[ht]
+	\centering	
+	\caption[\hspace{0.1cm}Camadas Sugeridas pela Arquitetura.]{Ilustração abstrata com as camadas e suas interações}
+	\vspace{-0.4cm}
+	\includegraphics[width=1\textwidth]{figuras/Camadas.png}
+	% Caption centralizada
+	% 	\captionsetup{justification=centering}
+	% Caption e fonte 
+	\vspace{-0.2cm}
+	\\\textbf{\footnotesize Fonte: Elaborado pelo autor }
+	\label{fig:figura6}
+\end{figure}
+\vspace{-0.5cm}
 
 \subsubsection{{\it Camada de Componentes}}
 
@@ -179,35 +210,40 @@ Ao longo desse processo, foi possível perceber os benefícios das tecnologias e
 
 A separação do código em módulos permitiu que a reutilização se tornasse mais clara pois cada componente pôde ser separado e codificado de forma independente, como a arquitetura sugere. Tal prática se provou útil quando a aplicação começou a crescer e novos componentes foram adicionados.
 
-A utilização de conceitos de programação funcional também foi essencial para a codificação eficiente desta camada. A minimização de efeitos colaterais com a ampla utilização de funções puras, que utilizam o conceito de imutabilidade de parâmetros e possuem comportamento previsíveis, permitiu que os componentes implementados possuíssem escopos mapeados, fazendo com que sua reutilização se tornasse mais eficaz ao encapsular seu funcionamento interno.
+%A utilização de conceitos de programação funcional também foi essencial para a codificação eficiente desta camada. A minimização de efeitos colaterais com a ampla utilização de funções puras, que utilizam o conceito de imutabilidade de parâmetros e possuem comportamento previsíveis, permitiu que os componentes implementados possuíssem escopos mapeados, fazendo com que sua reutilização se tornasse mais eficaz ao encapsular seu funcionamento interno.
 
 \subsubsection{{\it Camada de Aplicação}}
 
 Esta camada é responsável por integrar os componentes implementados na anterior de tal maneira que o produto final possua uma árvore de componentes interconectados que possam representar a aplicação final. Essa proposta é a recomendação oficial da biblioteca utilizada, \textit{AngularJS} e também é embasada no paradigma de desenvolvimento baseado em componentes \cite{pressman2011}.
 
-Além da integração dos componentes de forma estrutural, esta camada também é responsável pelo tratamento de mensagens externas e o encaminhamento de forma normalizada desses dados para outras partes da aplicação por meio do controle de estados, que é realizado a fim de gerar comportamentos previsíveis e que possibilitem traçar uma linha do tempo das mudanças realizadas.
+Além da integração dos componentes de forma estrutural, esta camada também é responsável pelo tratamento de mensagens externas e o encaminhamento de forma normalizada destes dados para outras partes da aplicação por meio do controle de estados, que é realizado a fim de gerar comportamentos previsíveis e que possibilitem traçar uma linha do tempo das mudanças realizadas.
 
-De uma forma geral, esta camada foca na composição dos componentes e a comunicação entre eles, por meio do controle de estados.Com essa abordagem os componentes podem ser implementados na camada anterior sem a necessidade de possuírem uma definição do contexto da aplicação final. Isso permite que uma extensa gama de componentes possa existir e que o desenvolvimento da aplicação em si seja apenas a combinação destes de uma forma funcional, o que, como já foi dito, é um dos princípios do DBC.
+De uma forma geral, esta camada foca na composição dos componentes e a comunicação entre eles por meio do controle de estados. Com essa abordagem os componentes podem ser implementados na camada anterior sem a necessidade de possuírem uma definição do contexto da aplicação final. Isso permite que uma extensa gama de componentes possa existir e que o desenvolvimento da aplicação em si seja apenas a combinação destes de uma forma funcional, o que, como já foi dito, é um dos princípios do DBC.
 
-Durante a codificação alguns pontos foram repensados pois por utilizar \textit{WebSockets} para comunicação externa, a aplicação necessita ser capaz de tratar diversos eventos assíncronos. Isso fez com que uma estrutura de estados utilizando o padrão de projeto \textit{Publish/Subscribe} fosse implementada, porém  foi detectado que muitas vezes os estados de variáveis independentes em partes distintas da aplicação não estavam sendo mantidos em sincronia. Tal fator, em adição à necessidade constante do desenvolvedor final sempre ser responsável por adicionar tratadores de eventos a fim de reagir a tais mudanças, fez com que esse padrão de projeto fosse substituído por uma implementação baseada nos conceitos sugeridos por \cite{presentContainerAbramov}, denominada \textit{Redux}. Tal abordagem utiliza o conceito de ações explícitas, em que todas as mudanças de estados devem possuir uma ação correspondente, que por sua vez, deve ser emitida a fim de notificar as partes interessadas do evento ocorrido. Esta comunicação utiliza uma abordagem \textit{top-down} de forma que todas as ações enviadas criam um novo estado, que é repassado para os componentes para que estes possam reagir da forma como foram definidos \cite{redux}.
+De forma similar a Camada de Componentes, a codificação foi realizada utilizando o \textit{TypeScript}, que facilitou a integração dos componentes por ser a mesma tecnologia em que foram implementados. A composição dos componentes foi realizada utilizando uma aplicação iniciada com o \textit{template} do \textit{Ionic Framework} em conjunto com o \textit{AngularJS}. O controle de estados, foi implementado seguindo o padrão \textit{Redux} e a parte visual se deu por conta da composição dos elementos CSS do \textit{Ionic Framework} em conjunto com os componentes codificados na camada anterior.
 
-De forma similar a Camada de Componentes, a codificação foi realizada utilizando o \textit{TypeScript}, que facilitou a integração dos componentes por ser a mesma tecnologia em que foram implementados. A composição dos componentes foi realizada utilizando uma aplicação iniciada com o \textit{template} do \textit{Ionic Framework} em conjunto com o \textit{AngularJS}. O controle de estados, como já dito, foi implementado seguindo o padrão \textit{Redux} e a parte visual se deu por conta da composição dos elementos CSS do \textit{Ionic Framework} em conjunto com os componentes codificados na camada anterior.
+Durante a codificação do protótipo, alguns pontos da implementação inicial foram repensados. Por utilizar \textit{WebSockets} para comunicação externa, a aplicação necessita ser capaz de tratar diversos eventos assíncronos. Isso fez com que uma estrutura de estados utilizando o padrão de projeto \textit{Publish/Subscribe} fosse implementada a fim de tratar estas mensagens assíncronas. Ao realizar experimentos práticos, foi detectado que muitas vezes estados de variáveis em escopos distintos da aplicação não estavam sendo mantidos em sincronia devido à necessidade constante do desenvolvedor final sempre ser responsável por adicionar tratadores de eventos a fim de reagir a tais mudanças. 
+Tamanha dificuldade fez com que o padrão de projeto fosse substituído por uma implementação baseada nos conceitos sugeridos por \cite{redux}, denominada \textit{Redux}. Tal abordagem utiliza o conceito de ações explícitas, em que todas as mudanças de estados devem possuir uma ação correspondente, que por sua vez, deve ser emitida a fim de notificar as partes interessadas do evento ocorrido por meio de uma comunicação \textit{top-down} \footnote[1]{\textit{top-down} - Do topo para a base}, desta forma, toda mudança de estado é repassada para os componentes possibilitando que estes possam reagir da forma como foram codificados \cite{redux}.
 
 
 \subsubsection{{\it Camada de Deploy}}
-A camada final é a responsável por empacotar a solução implementada e incluir as funcionalidades necessárias para que a execução seja suportada em todas as plataformas necessárias. 
+A camada final é a responsável por empacotar a solução implementada e incluir as funcionalidades necessárias para que a execução seja suportada em todas as plataformas desejadas. 
 
-Apesar de não ser opinativa na forma como o empacotamento deve ocorrer, a implementação que se provou mais viável foi a utilização de \textit{scripts} pré-determinados com o intuito de possibilitar customizações específicas caso necessário. Os \textit{scripts} devem ser separados por plataforma e implementados utilizando padrões da filosofia Unix \cite{unixPhilosophy}. Apesar da separação, possuem o mesmo fluxo básico: A aplicação gerada na camada anterior é recebida e cada rotina deve tratar os arquivos de forma independente, gerando no final o artefato a ser executado na plataforma adequada.
+%Esta camada é a mais liberal de todas, pois após realizar a pesquisa das ferramentas atuais, foi possível perceber a existência de uma extensa lista de ferramentas capazes de assumirem esta responsabilidade.
 
-Durante a codificação, foi possível identificar diversos pontos que se provaram inerentes para domínios de plataformas específicas. Em razão deste fato, durante a evolução do projeto esta camada foi a que mais sofreu alterações durante a codificação, pois diversas vezes foi necessário alterar os \textit{scripts} a fim de padronizar o processo de empacotamento para cada plataforma, chegando até a quase se tornar um ponto que poderia refutar a arquitetura por falta de ferramentas que permitissem sua implementação prática. Isso fez com que uma pesquisa mais aprofundada em ferramentas de automação fosse realizada e após uma refatoração com base nas lições aprendidas foi possível implementar \textit{scripts} expansíveis que possibilitaram o reuso de soluções e a padronização de tratamentos para casos específicos, fazendo com que a camada funcionasse de forma eficiente.
+Apesar de não ser opinativa na forma como o empacotamento deve ocorrer, a implementação que se provou mais viável foi a utilização de \textit{scripts} pré-determinados com o intuito de possibilitar customizações específicas. Os \textit{scripts} devem ser separados por plataforma e implementados utilizando padrões da filosofia Unix \cite{unixPhilosophy}. Apesar da separação, possuem o mesmo fluxo básico: A aplicação gerada na camada anterior é recebida e cada rotina deve tratar os arquivos de forma independente, gerando no final o artefato a ser executado na plataforma adequada.
 
-Diferentes implementações foram codificadas tendo em vista que algumas plataformas não aceitam a combinação de HTML + CSS + \textit{JavaScript} para interpretação de forma nativa. Tal limitação foi identificada ao decorrer da implementação quando ao gerar o projeto final da aplicação para empacotamento, era necessário adicionar arquivos extras para que a plataforma conseguisse identificar a aplicação como válida. No caso do \textit{Ionic Framework}, as plataformas suportadas na versão 2 não apresentaram problema, porém algumas vezes, aplicações executando na plataforma \textit{Android} 4.4 ou inferior necessitaram ser embarcadas com um navegador próprio, a fim de viabilizar a identificação de diversos recursos nativos, aprimorar a performance e possibilitar um funcionamento transparente para o usuário final.
+Durante a codificação, foi possível identificar diversos pontos que se provaram inerentes para domínios de plataformas específicas. Em razão deste fato, durante a evolução do projeto esta camada foi a que mais sofreu alterações durante a codificação, pois diversas vezes foi necessário alterar os \textit{scripts} a fim de padronizar o processo de empacotamento para cada plataforma. Isso fez com que uma pesquisa mais aprofundada em ferramentas de automação fosse realizada e após uma refatoração com base nas lições aprendidas foi possível implementar \textit{scripts} expansíveis que possibilitaram o reuso de soluções e a padronização de tratamentos para casos específicos, fazendo com que a implementação funcionasse de forma eficiente.
+
+Diferentes implementações foram codificadas tendo em vista que algumas plataformas não aceitam a combinação de HTML + CSS + \textit{JavaScript} para interpretação de forma nativa. Tal limitação foi identificada durante experimentações práticas, quando ao gerar o projeto final da aplicação para empacotamento, era necessário adicionar arquivos extras para que a plataforma conseguisse identificar a aplicação como válida. No caso do \textit{Ionic Framework}, as plataformas suportadas na versão 2 não apresentaram problema, porém algumas vezes, aplicações executando na plataforma \textit{Android} 4.4 ou inferior necessitaram ser embarcadas com um navegador próprio.
+
+%, a fim de viabilizar a identificação de diversos recursos nativos, aprimorar a performance e possibilitar um funcionamento transparente para o usuário final.
 
 De forma similar, quando a aplicação foi inicialmente preparada para distribuição em computadores de mesa utilizando a ferramenta \textit{Electron}, foi identificado a necessidade de adicionar arquivos e configurações extras a fim de permitir a renderização correta. O que foi identificado é que a ferramenta utiliza, fundamentalmente, duas \textit{threads}, sendo uma responsável pelo código da aplicação e outra pela renderização do HTML. Esta separação, apesar de útil e performática, necessita um arquivo contendo codificação extra e configurações específicas para identificar momentos em que a aplicação necessita ser renderizada novamente, como por exemplo, ao receber eventos assíncronos via \textit{WebSockets} quando fora de foco. Tal peculiaridade fez com que um \textit{script} mais elaborado fosse desenvolvido a fim de permitir que as aplicações distribuídas por esse meio funcionassem da mesma forma que em aplicações sem uma separação de \textit{threads} similar.
 
 \subsection{Protótipo}
 
-Nessa seção contêm um detalhamento das principais funcionalidades e componentes do protótipo codificado.
+Esta seção contêm um detalhamento das principais funcionalidades e componentes do protótipo codificado.
 
 \subsubsection{{\it Principais funcionalidades}}
 
@@ -227,14 +263,12 @@ A comunicação entre os dispositivos conectados se dará por meio de eventos em
 	% 	\captionsetup{justification=centering}
 	% Caption e fonte 
 	\vspace{-0.2cm}
-	\\\textbf{\footnotesize Fonte: \cite{pressman2011} }
+	\\\textbf{\footnotesize Fonte: Elaborado pelo autor }
 	\label{fig:figura2}
 \end{figure}
 \vspace{-0.5cm}
 
 \subsubsection{{\it Principais Componentes}}
-Esta seção tem por objetivo explicar de forma mais detalhada como se exerceu a codificação dos componentes desenvolvidos para o protótipo.
-
 De acordo com os conceitos definidos pela Camada de Componentes, ocorreu a separação de todas as funcionalidades da aplicação em componentes reutilizáveis com o objetivo de realizar a composição e integração da árvore de componentes que representa a aplicação final.
 
 Durante a codificação, estes componentes foram separados em pastas distintas que contêm, no mínimo, um arquivo \textbf{.html} para definição da estrutura da página utilizando \textit{tags} HTML e componentes próprios com a linguagem de \textit{template} do \textit{AngularJS}, um arquivo \textbf{.scss} que é utilizado pelo pré-processados de CSS, \textit{Sass}, para a definição da folha de estilo da página e um arquivo \textbf{.ts} onde a classe que implementa a página é definida utilizando o \textit{TypeScript}. Essa separação por pastas permite uma abordagem modular e faz com que todo o código e folhas de estilo sejam tratados como privados, ou seja, não afetam as outras partes da aplicação, o que normalmente não acontece em aplicações \textit{WEB} tradicionais.
@@ -250,39 +284,52 @@ Com a utilização do\textit{ Ionic Framework}, foram desenvolvidos alguns compo
 	% 	\captionsetup{justification=centering}
 	% Caption e fonte 
 	\vspace{-0.2cm}
-	\\\textbf{\footnotesize Fonte: \cite{pressman2011} }
+	\\\textbf{\footnotesize Fonte: Elaborado pelo autor }
 	\label{fig:figura3}
 \end{figure}
-\vspace{-0.5cm}
 
 Em um nível abaixo dos componentes responsáveis pela definição das páginas da aplicação, foram implementados diversos componentes para atender os requisitos necessários da aplicação. Alguns exemplos são: \textit{UrlPreview, UrlContentPreview, UrlImagePreview, UrlMessageForm, UrlList, WelcomeMessageCard, NewMessageButton}. Dentre estes componentes, é possível identificar alguns que, diferente dos citados anteriormente, possuem uma lógica interna, que seguindo os conceitos sugeridos por \cite{presentContainerAbramov}, são os chamados componentes de composição e apesar de possuírem uma importância singular para o projeto, estão presente em menor quantidade pois foi possível perceber durante a implementação do projeto, que os componentes menores eram reutilizados em maior quantidade e que a composição de componentes se provou mais útil do que a extensão dos mesmos. Com isso, a maioria dos componentes implementados, se encaixam na categoria de apresentação, de forma que apenas uma minoria possui alguma lógica interna. 
 
+A figura \ref{fig:figura4} representa de forma simplificada os principais componentes implementados na aplicação protótipo e suas interações.
 
-A figura \ref{fig:figura4} representa uma árvore com os principais componentes implementados na aplicação protótipo.
+\begin{figure}[ht]
+	\centering	
+	\caption[\hspace{0.1cm}Diagra simplificado com os principais componentes e suas relações.]{Diagra simplificado com os principais componentes e suas relações}
+	\vspace{-0.4cm}
+	\includegraphics[width=0.8\textwidth]{figuras/Components.png}
+	% Caption centralizada
+	% 	\captionsetup{justification=centering}
+	% Caption e fonte 
+	\vspace{-0.2cm}
+	\\\textbf{\footnotesize Fonte: Elaborado pelo autor }
+	\label{fig:figura4}
+\end{figure}
+
 
 \subsubsection{{\it Telas do Protótipo}}
 A figura \ref{fig:figura5} representa o comportamento da aplicação final em diferentes plataformas.
 
 \begin{figure}[ht]
 	\centering	
-	\caption[\hspace{0.1cm}Exemplo de código da página de Login.]{Exemplo de código da página de Login}
+	\caption[\hspace{0.1cm}Exemplo de tela do protótipo em diferentes plataformas.]{Exemplo de tela do protótipo em diferentes plataformas}
 	\vspace{-0.4cm}
-	\includegraphics[width=0.6\textwidth]{figuras/ExemploTela.png}
+	\includegraphics[width=1\textwidth]{figuras/ExemploTela.png}
 	% Caption centralizada
 	% 	\captionsetup{justification=centering}
 	% Caption e fonte 
 	\vspace{-0.2cm}
-	\\\textbf{\footnotesize Fonte: \cite{pressman2011} }
+	\\\textbf{\footnotesize Fonte: Elaborado pelo autor }
 	\label{fig:figura5}
 \end{figure}
 \vspace{-0.5cm}
-
 
 
 \section{\esp Conclusão}
 
 Com o desenvolvimento bem sucedido do protótipo utilizando a arquitetura sugerida, é possível concluir que o desenvolvimento de aplicações híbridas multiplataformas utilizando o mesmo código compartilhado é viável e possui capacidade para ser utilizada em diversas aplicações.
 
-Com a utilização das ferramentas existentes nas etapas aqui registradas foi possível desenvolver uma solução expansível que possuíse uma certa gama de funcionalidades úteis e não totalmente simplórias de uma forma satisfatória. O nível de customização e qualidade final de renderização e reutilização também foram aceitáveis, indicando que a arquitetura utilizada possa servir de base para outras aplicações em variados contextos.
+Com a utilização das ferramentas existentes nas etapas aqui registradas foi possível desenvolver uma solução expansível que possuísse uma certa gama de funcionalidades úteis e não totalmente simplórias de uma forma satisfatória. O nível de customização e qualidade final de renderização e reutilização também foram aceitáveis, indicando que a arquitetura utilizada possa servir de base para outras aplicações em variados contextos.
 
 De uma forma geral, a arquitetura, apesar de expansível e modular, só foi testada com uma certa gama de ferramentas específicas em cada camada, ficando a substituição de cada ferramenta um trabalho futuro a fim de aprimorar o desacoplamento e diminuir as dependências da arquitetura em ferramentas específicas, focando mais em conceitos de responsabilidades do que implementações específicas.
+
+Da mesma forma, apesar da implementação bem sucedida do protótipo, as funcionalidades especificadas e implementadas não representam todas as possibilidades e necessidades que aplicações atuais apresentam. Como trabalho futuro, novos protótipos que apresentem um uso mais intensivo de recursos de \textit{hardware} e possuam um funcionamento adaptável em cada plataforma seriam de grande valia para a validação da arquitetura, especialmente para as camadas de Componentes e \textit{Deploy}.
